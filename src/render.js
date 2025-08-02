@@ -22,7 +22,7 @@ export default class Render
         switch (prms.type)
         {
             case 'msg_box':
-                this.inject_style('http://127.0.0.1:5500/src/styles/msg_box.css')
+                this.inject_style('https://cdn.jsdelivr.net/gh/Mikeprogrammer973/render-utils-module/src/styles/msg_box.css')
 
                 const theme = prms.props.theme === 'light' ? 'light' : 'dark'
 
