@@ -80,7 +80,7 @@ export default class Render
             case 'alert':
                 const id = this.__id();
 
-                this.inject_style('http://127.0.0.1:5500/src/styles/alert.css', id)
+                this.inject_style('https://cdn.jsdelivr.net/gh/Mikeprogrammer973/render-utils-module/src/styles/alert.css', id)
 
                 const useLight = prms.props.theme === 'light';
                 const type = ['info', 'success', 'warning', 'error'].includes(prms.props.variant)
