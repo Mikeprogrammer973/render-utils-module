@@ -7,11 +7,11 @@ async function main()
     await render.page('http://127.0.0.1:5500/example/test.html', document.querySelector('#app'))
 
     render.msg_box({
-        title: 'Notification',
-        msg: 'This is a notification',
+        title: 'Message box',
+        msg: 'Do you want to continue?',
         action: {
             cancel: {
-                text: 'Dismiss',
+                text: 'Cancel',
                 callback: () => {
                     console.log('Cancel clicked')
                 }
@@ -25,6 +25,15 @@ async function main()
         },
         theme: 'dark'
     })
+
+    render.alert({
+        theme: 'light',
+        variant: 'success',
+        msg: 'This is a success alert, be cheerful, my friend!'
+    })
+
+    render.alert()
+
 }
 
 main()
