@@ -4,7 +4,7 @@ const render = new Render();
 
 async function main()
 {
-    /*render.msg_box({
+    render.msg_box({
         title: 'Message box',
         msg: 'Do you want to continue?',
         action: {
@@ -30,7 +30,7 @@ async function main()
         msg: 'This is a success alert, be cheerful, my friend!'
     })
 
-    render.alert()*/
+    render.alert()
 
     render.spinner()
 }
