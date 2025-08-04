@@ -13,26 +13,26 @@ export default class Render
 
     build(prms)
     {
-        let theme
+        let useLight, id__, cls
 
         switch (prms.type)
         {
             case 'msg_box':
-                const id__ = this.__id();
+                id__ = this.__id();
 
                 this.inject_style('http://127.0.0.1:5500/src/styles/msg_box.css', id__)
 
-                theme = prms.props.theme === 'light' ? 'light' : 'dark'
+                const theme__ = prms.props.theme === 'light' ? 'light' : 'dark'
 
                 const ntf = document.createElement('div');
                 ntf.id = id__
-                ntf.className = theme === 'light' ? 'backdrop-light' : 'backdrop';
+                ntf.className = theme__ === 'light' ? 'backdrop-light' : 'backdrop';
 
                 const ntf_content = document.createElement('div');
-                ntf_content.className = theme === 'light' ? 'msg-box-light' : 'msg-box';
+                ntf_content.className = theme__ === 'light' ? 'msg-box-light' : 'msg-box';
 
                 const ntf_close_btn = document.createElement('button');
-                ntf_close_btn.className = theme === 'light' ? 'close-light close' : 'close';
+                ntf_close_btn.className = theme__ === 'light' ? 'close-light close' : 'close';
                 ntf_close_btn.innerHTML =  '&times;'
                 ntf_close_btn.addEventListener('click', () => {
                     prms.props.action.cancel.callback()
@@ -49,7 +49,7 @@ export default class Render
                 ntf_actions.className = 'actions'
 
                 const ntf_cancel_btn = document.createElement('button')
-                ntf_cancel_btn.className = theme === 'light' ? 'cancel-light cancel' : 'cancel'
+                ntf_cancel_btn.className = theme__ === 'light' ? 'cancel-light cancel' : 'cancel'
                 ntf_cancel_btn.innerHTML = prms.props.action.cancel.text
                 ntf_cancel_btn.addEventListener('click', () => {
                     prms.props.action.cancel.callback()
@@ -57,7 +57,7 @@ export default class Render
                 })
 
                 const ntf_confirm_btn = document.createElement('button')
-                ntf_confirm_btn.className = theme === 'light' ? 'confirm-light confirm' : 'confirm'
+                ntf_confirm_btn.className = theme__ === 'light' ? 'confirm-light confirm' : 'confirm'
                 ntf_confirm_btn.innerHTML = prms.props.action.confirm.text
                 ntf_confirm_btn.addEventListener('click', () => {
                     prms.props.action.confirm.callback()
@@ -78,18 +78,18 @@ export default class Render
 
                 return ntf.id
             case 'alert':
-                const id = this.__id();
+                id__ = this.__id();
 
-                this.inject_style('http://127.0.0.1:5500/src/styles/alert.css', id)
+                this.inject_style('http://127.0.0.1:5500/src/styles/alert.css', id__)
 
-                const useLight = prms.props.theme === 'light';
+                useLight = prms.props.theme === 'light';
                 const type = ['info', 'success', 'warning', 'error'].includes(prms.props.variant)
                     ? prms.props.variant
                     : 'info';
-                const cls = (base) => useLight ? `${base}-light ${base}` : `${base}-dark ${base}`
+                cls = (base) => useLight ? `${base}-light ${base}` : `${base}-dark ${base}`
 
                 const alert = Object.assign(document.createElement('div'), {
-                    id,
+                    id: id__,
                     className: `${cls('alert')} ${type}`,
                 });
 
@@ -101,7 +101,7 @@ export default class Render
                 const close_btn = Object.assign(document.createElement('button'), {
                     className: cls('close'),
                     innerHTML: '&times;',
-                    onclick: () => this.destroy(id)
+                    onclick: () => this.destroy(id__)
                 });
 
                 const progress = document.createElement('div');
@@ -120,7 +120,7 @@ export default class Render
                     const interval = setInterval(() => {
                         if (currentWidth <= 0) {
                             clearInterval(interval)
-                            this.destroy(id)
+                            this.destroy(id__)
                             return
                         }
                         currentWidth -= step
@@ -128,7 +128,68 @@ export default class Render
                     }, step)
                 }
 
-                return id;
+                return alert.id
+            case 'spinner':
+                id__ = this.__id();
+
+                this.inject_style('http://127.0.0.1:5500/src/styles/spinner.css', id__);
+
+                const { variant = 'simple', theme = 'dark', text = 'Loading...', backdrop = true, custom = {} } = prms.props
+
+                useLight = theme === 'light';
+                cls = (base) => useLight ? `${base}-light ${base}` : `${base}-dark ${base}`;
+
+                const container = document.createElement('div');
+                container.id = id__;
+                container.className = backdrop ? cls('spinner-backdrop') : cls('spinner-container');
+
+                const spinnerWrapper = document.createElement('div');
+                spinnerWrapper.className = `spinner ${variant}`;
+
+                if (variant === 'custom' && custom.url) {
+                    const img = document.createElement('img');
+                    img.src = custom.url;
+                    img.alt = 'spinner';
+                    img.className = `custom-spinner ${custom.animation || ''}`;
+                    spinnerWrapper.appendChild(img);
+                } else {
+                    if (variant === 'simple' || variant === 'dual' || variant === 'triple') {
+                        if (custom.animation === 'spin') {
+                            const loader = document.createElement('div');
+                            loader.className = 'spinner-loader';
+
+                            const rings = variant === 'dual' ? 2 : variant === 'triple' ? 3 : 1;
+
+                            for (let i = 0; i < rings; i++) {
+                                const ring = document.createElement('div');
+                                ring.className = 'spinner-ring';
+                                loader.appendChild(ring);
+                            }
+
+                            spinnerWrapper.appendChild(loader);
+                        } else {
+                            const count = variant === 'dual' ? 2 : variant === 'triple' ? 3 : 1;
+                            for (let i = 0; i < count; i++) {
+                                const el = document.createElement('div');
+                                el.className = `spinner-circle circle-${i + 1} ${custom.animation || ''}`;
+                                spinnerWrapper.appendChild(el);
+                            }
+                        }
+                    }
+                }
+
+                container.appendChild(spinnerWrapper);
+
+                if (text) {
+                    const caption = document.createElement('div');
+                    caption.className = 'spinner-text';
+                    caption.innerText = text;
+                    container.appendChild(caption);
+                }
+
+                document.body.appendChild(container);
+
+                return container.id
         }
     }
 
@@ -140,6 +201,11 @@ export default class Render
     alert(prms = {theme: 'dark', variant: 'info', msg: 'Something...', timeout: 3000})
     {
         return this.build({ type: 'alert', props: prms })
+    }
+
+    spinner(prms = {variant: 'triple', theme: 'dark', text: '', backdrop: true, custom: { url: '', animation: 'spin' }})
+    {
+        return this.build({ type: 'spinner', props: prms })
     }
 
     async page(url, host = document.body, util = () => {})
