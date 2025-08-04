@@ -12,7 +12,7 @@
 }
 
 .spinner-backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.329);
   pointer-events: auto;
 }
 
@@ -25,7 +25,7 @@
 .spinner-container-light,
 .spinner-backdrop-light {
   color: #000;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.479);
 }
 
 /* Spinner core styles */
@@ -38,8 +38,8 @@
 }
 
 .spinner-circle {
-  width: 1rem;
-  height: 1rem;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 50%;
   background: currentColor;
   animation: spinner-bounce 0.8s infinite ease-in-out;
@@ -57,20 +57,17 @@
   position: relative;
   width: 70px;
   height: 70px;
-}
-
-.spinner-ring {
-  position: absolute;
-  border: 3px solid transparent;
-  border-top-color: #acc9dd;
-  border-bottom-color: #acc9dd;
-  border-radius: 50%;
-  animation: spinner-spin 1s linear infinite;
+  margin-bottom: 10px;
 }
 
 .spinner-ring {
   width: 100%;
   height: 100%;
+  position: absolute;
+  border: 3px solid transparent;
+  border-color: rgb(255, 255, 255) transparent;
+  border-radius: 50%;
+  animation: spinner-spin 1s linear infinite;
 }
 
 .spinner-ring:nth-child(2) {
@@ -121,8 +118,9 @@
 
 /* Custom image spinner */
 .custom-spinner {
-  width: 3rem;
-  height: 3rem;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
   object-fit: contain;
 }
 
@@ -156,5 +154,8 @@
 .spinner-text {
   font-size: 1rem;
   text-align: center;
-  font-family: system-ui, sans-serif;
+  padding: 20px 0px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  font-family: 'Courier New', Courier, monospace;
 }

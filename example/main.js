@@ -4,7 +4,7 @@ const render = new Render();
 
 async function main()
 {
-    await render.page('http://127.0.0.1:5500/example/test.html', document.querySelector('#app'))
+    await render.page('/example/test.html', document.querySelector('#app'))
 
     /*render.msg_box({
         title: 'Message box',
