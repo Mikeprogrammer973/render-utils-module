@@ -227,7 +227,7 @@ export default class Render
         return this.build({ type: 'alert', props: prms })
     }
 
-    spinner(prms = {variant: 'custom', theme: 'light', text: { content: 'Loading...', animated: true, color: 'lightgray' }, backdrop: true, custom: { url: 'https://www.svgrepo.com/show/54385/target.svg', animation: 'pulse', color: 'skyblue' }})
+    spinner(prms = {variant: 'custom', theme: 'dark', text: { content: 'Loading...', animated: true, color: 'lightgray' }, backdrop: true, custom: { url: 'https://www.svgrepo.com/show/54385/target.svg', animation: 'pulse', color: 'skyblue' }})
     {
         return this.build({ type: 'spinner', props: prms })
     }

@@ -4,8 +4,6 @@ const render = new Render();
 
 async function main()
 {
-    await render.page('/example/test.html', document.querySelector('#app'))
-
     /*render.msg_box({
         title: 'Message box',
         msg: 'Do you want to continue?',
